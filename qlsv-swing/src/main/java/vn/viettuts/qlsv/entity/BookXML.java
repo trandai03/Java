@@ -6,17 +6,17 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "students")
+@XmlRootElement(name = "books")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class StudentXML {
+public class BookXML {
     
-    private List<Student> student;
+    private List<Book> book;
 
-    public List<Student> getStudent() {
-        return student;
+    public List<Book> getBook() {
+        return book;
     }
 
-    public void setStudent(List<Student> student) {
-        this.student = student;
+    public void setBook(List<Book> book) {
+        this.book = book;
     }
 }

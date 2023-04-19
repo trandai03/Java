@@ -6,25 +6,25 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "student")
+@XmlRootElement(name = "book")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Student implements Serializable {
+public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
     private String name;
-    private byte age;
+    private byte author;
     private String address;
     /* điểm trung bình của sinh viên */
     private float gpa;
 
-    public Student() {
+    public Book() {
     }
 
-    public Student(int id, String name, byte age, String address, float gpa) {
+    public Book(int id, String name, byte author, String address, float gpa) {
         super();
         this.id = id;
         this.name = name;
-        this.age = age;
+        this.author = author;
         this.address = address;
         this.gpa = gpa;
     }
@@ -45,12 +45,12 @@ public class Student implements Serializable {
         this.name = name;
     }
 
-    public byte getAge() {
-        return age;
+    public byte getAuthor() {
+        return author;
     }
 
-    public void setAge(byte age) {
-        this.age = age;
+    public void setAuthor(byte author) {
+        this.author = author;
     }
 
     public String getAddress() {

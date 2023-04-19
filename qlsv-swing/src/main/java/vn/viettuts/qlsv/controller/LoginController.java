@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 import vn.viettuts.qlsv.dao.UserDao;
 import vn.viettuts.qlsv.entity.User;
 import vn.viettuts.qlsv.view.LoginView;
-import vn.viettuts.qlsv.view.StudentView;
+import vn.viettuts.qlsv.view.BookView;
 
 public class LoginController {
     private UserDao userDao;
     private LoginView loginView;
-    private StudentView studentView;
+    private BookView bookView;
     
     public LoginController(LoginView view) {
         this.loginView = view;
@@ -34,9 +34,9 @@ public class LoginController {
             User user = loginView.getUser();
             if (userDao.checkUser(user)) {
                 // nếu đăng nhập thành công, mở màn hình quản lý sinh viên
-                studentView = new StudentView();
-                StudentController studentController = new StudentController(studentView);
-                studentController.showStudentView();
+                bookView = new BookView();
+                BookController bookController = new BookController(bookView);
+                bookController.showBookView();
                 loginView.setVisible(false);
             } else {
                 loginView.showMessage("username hoặc password không đúng.");
