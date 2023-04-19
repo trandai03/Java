@@ -10,25 +10,33 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
+    private String type;
     private int id;
     private String name;
-    private byte author;
-    private String address;
+    private String author;
+    private int year;
     /* điểm trung bình của sinh viên */
-    private float gpa;
+    private float cost;
 
     public Book() {
     }
 
-    public Book(int id, String name, byte author, String address, float gpa) {
+    public Book(int id, String name, String author, int year, float cost,String type) {
         super();
         this.id = id;
         this.name = name;
         this.author = author;
-        this.address = address;
-        this.gpa = gpa;
+        this.year = year;
+        this.cost = cost;
+        this.type=type;
     }
-
+    
+    public String getType(){
+        return this.type;
+    }
+    public void setType(String type){
+        this.type=type;
+    }
     public int getId() {
         return id;
     }
@@ -45,27 +53,27 @@ public class Book implements Serializable {
         this.name = name;
     }
 
-    public byte getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(byte author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
-    public String getAddress() {
-        return address;
+    public int getYear() {
+        return year;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setYear(int year) {
+        this.year = year;
     }
 
-    public float getGpa() {
-        return gpa;
+    public float getCost() {
+        return cost;
     }
 
-    public void setGpa(float gpa) {
-        this.gpa = gpa;
+    public void setCost(float cost) {
+        this.cost = cost;
     }
 }

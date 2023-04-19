@@ -15,7 +15,7 @@ import vn.viettuts.qlsv.utils.FileUtils;
  * @author viettuts.vn
  */
 public class BookDao {
-    private static final String STUDENT_FILE_NAME = "book.xml";
+    private static final String BOOK_FILE_NAME = "book.xml";
     private List<Book> listBooks;
 
     public BookDao() {
@@ -33,7 +33,7 @@ public class BookDao {
     public void writeListBooks(List<Book> books) {
         BookXML bookXML = new BookXML();
         bookXML.setBook(books);
-        FileUtils.writeXMLtoFile(STUDENT_FILE_NAME, bookXML);
+        FileUtils.writeXMLtoFile(BOOK_FILE_NAME, bookXML);
     }
 
     /**
@@ -43,7 +43,7 @@ public class BookDao {
      */
     public List<Book> readListBooks() {
         List<Book> list = new ArrayList<Book>();
-        BookXML bookXML = (BookXML) FileUtils.readXMLFile(STUDENT_FILE_NAME, BookXML.class);
+        BookXML bookXML = (BookXML) FileUtils.readXMLFile(BOOK_FILE_NAME, BookXML.class);
         if (bookXML != null) {
             list = bookXML.getBook();
         }
@@ -77,8 +77,8 @@ public class BookDao {
             if (listBooks.get(i).getId() == book.getId()) {
                 listBooks.get(i).setName(book.getName());
                 listBooks.get(i).setAuthor(book.getAuthor());
-                listBooks.get(i).setAddress(book.getAddress());
-                listBooks.get(i).setGpa(book.getGpa());
+                listBooks.get(i).setYear(book.getYear());
+                listBooks.get(i).setCost(book.getCost());
                 writeListBooks(listBooks);
                 break;
             }
@@ -120,12 +120,12 @@ public class BookDao {
     }
 
     /**
-     * sắp xếp danh sách book theo GPA theo tứ tự tăng dần
+     * sắp xếp danh sách book theo Cost theo tứ tự tăng dần
      */
-    public void sortBookByGPA() {
+    public void sortBookByCost() {
         Collections.sort(listBooks, new Comparator<Book>() {
             public int compare(Book book1, Book book2) {
-                if (book1.getGpa() > book2.getGpa()) {
+                if (book1.getCost() > book2.getCost()) {
                     return 1;
                 }
                 return -1;

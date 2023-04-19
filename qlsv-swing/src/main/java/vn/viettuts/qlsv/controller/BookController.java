@@ -23,7 +23,7 @@ public class BookController {
         view.addEdiBookListener(new EditBookListener());
         view.addDeleteBookListener(new DeleteBookListener());
         view.addClearListener(new ClearBookListener());
-        view.addSortBookGPAListener(new SortBookGPAListener());
+        view.addSortBookCostListener(new SortBookCostListener());
         view.addSortBookNameListener(new SortBookNameListener());
         view.addListBookSelectionListener(new ListBookSelectionListener());
     }
@@ -101,20 +101,20 @@ public class BookController {
     }
 
     /**
-     * Lớp SortBookGPAListener 
-     * chứa cài đặt cho sự kiện click button "Sort By GPA"
+     * Lớp SortBookCostListener 
+     * chứa cài đặt cho sự kiện click button "Sort By Cost"
      * 
      * @author viettuts.vn
      */
-    class SortBookGPAListener implements ActionListener {
+    class SortBookCostListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            bookDao.sortBookByGPA();
+            bookDao.sortBookByCost();
             bookView.showListBooks(bookDao.getListBooks());
         }
     }
 
     /**
-     * Lớp SortBookGPAListener 
+     * Lớp SortBookCostListener 
      * chứa cài đặt cho sự kiện click button "Sort By Name"
      * 
      * @author viettuts.vn
