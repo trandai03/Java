@@ -66,7 +66,7 @@ public class BookView extends javax.swing.JFrame {
         bookTable = new javax.swing.JTable();
         sortBookNameBtn = new javax.swing.JButton();
         sortBookCostBtn = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        Type = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
@@ -158,7 +158,7 @@ public class BookView extends javax.swing.JFrame {
 
         sortBookCostBtn.setText("Sort By Cost");
 
-        jLabel6.setText("Type");
+        Type.setText("Type");
 
         jLabel7.setText("Search By");
 
@@ -196,7 +196,7 @@ public class BookView extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Type, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(typeList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,7 +233,7 @@ public class BookView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(typeList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                            .addComponent(Type))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -416,19 +416,6 @@ public class BookView extends javax.swing.JFrame {
         return true;    }
     
     private boolean validateAuthor() {
-//        try {
-//            String author = authorField.getText().trim();
-//            if (author < 0 || author > 100) {
-//                authorField.requestFocus();
-//                showMessage("Author không hợp lệ, author nên trong khoảng 0 đến 100.");
-//                return false;
-//            }
-//        } catch (Exception e) {
-//            authorField.requestFocus();
-//            showMessage("Author không hợp lệ!");
-//            return false;
-//        }
-//        return true;
            String author = authorField.getText();
         if (author == null || "".equals(author.trim())) {
             authorField.requestFocus();
@@ -521,6 +508,7 @@ public class BookView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Type;
     private javax.swing.JButton addBookBtn;
     private javax.swing.JTextField authorField;
     private javax.swing.JTable bookTable;
@@ -537,7 +525,6 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
