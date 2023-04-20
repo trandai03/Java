@@ -79,6 +79,11 @@ public class BookView extends javax.swing.JFrame {
         setTitle("Thư viện");
 
         typeList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Type", "Book", "Newspaper" }));
+        typeList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeListActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("ID");
 
@@ -277,6 +282,10 @@ public class BookView extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void typeListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeListActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_typeListActionPerformed
     
     
     
@@ -459,9 +468,7 @@ public class BookView extends javax.swing.JFrame {
     public void addListBookSelectionListener(ListSelectionListener listener) {
         bookTable.getSelectionModel().addListSelectionListener(listener);
     }
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
