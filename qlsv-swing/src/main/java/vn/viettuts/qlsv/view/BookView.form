@@ -92,7 +92,6 @@
                                       <Component id="typeList" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                                       <Component id="filterButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="nameField" max="32767" attributes="0"/>
                                   <Component id="idField" max="32767" attributes="0"/>

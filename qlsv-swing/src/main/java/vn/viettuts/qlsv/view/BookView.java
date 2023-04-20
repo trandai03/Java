@@ -530,12 +530,15 @@ public class BookView extends javax.swing.JFrame {
             findByName(list);
         }else if(type=="Author"){
             findByAuthor(list);
+        }else{
+            showListBooks(list);
         }
     }
     
     public void filter(List<Book> list){
         String type= typeList.getSelectedItem().toString();
         List<Book> listFind= new ArrayList<>();
+        if(type != "All"){
         for(int i=0;i<list.size();i++){
             Book temp= list.get(i);
             if(temp.getType().equalsIgnoreCase(type)){
@@ -548,6 +551,11 @@ public class BookView extends javax.swing.JFrame {
             showMessage("OK");
         }
         showListBooks(listFind);
+        }
+        
+        else{
+            showListBooks(list);
+        }
     }
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
