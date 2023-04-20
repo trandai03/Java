@@ -24,7 +24,7 @@ public class BookView extends javax.swing.JFrame {
      */
     
     private String [] columnNames = new String [] {
-            "ID", "Name", "Author", "Year", "Cost"};
+            "ID", "Name", "Author", "Year", "Cost", "Type"};
     // định nghĩa dữ liệu mặc định của bẳng book là rỗng
     private Object data = new Object [][] {};
     public BookView() {
