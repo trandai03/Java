@@ -3,7 +3,7 @@
     <book>
         <id>1</id>
         <name>Mai Thanh Toan</name>
-        <author>22</author>
+        <author>Thuy Linh</author>
         <year>2000</year>
         <cost>8.0</cost>
     </book>
@@ -27,5 +27,19 @@
         <author>18</author>
         <year>2022</year>
         <cost>9.0</cost>
+    </book>
+    <book>
+        <id>5</id>
+        <name>Dương</name>
+        <author>23</author>
+        <year>2003</year>
+        <cost>9.0</cost>
+    </book>
+    <book>
+        <id>6</id>
+        <name>Hoàng Long</name>
+        <author>Anhxtanh</author>
+        <year>2012</year>
+        <cost>100.0</cost>
     </book>
 </books>

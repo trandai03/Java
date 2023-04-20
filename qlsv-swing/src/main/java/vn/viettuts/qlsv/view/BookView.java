@@ -391,25 +391,33 @@ public class BookView extends javax.swing.JFrame {
     }
     
     private boolean validateAuthor() {
-        try {
-            Byte author = Byte.parseByte(authorField.getText().trim());
-            if (author < 0 || author > 100) {
-                authorField.requestFocus();
-                showMessage("Author không hợp lệ, author nên trong khoảng 0 đến 100.");
-                return false;
-            }
-        } catch (Exception e) {
+//        try {
+//            String author = authorField.getText().trim();
+//            if (author < 0 || author > 100) {
+//                authorField.requestFocus();
+//                showMessage("Author không hợp lệ, author nên trong khoảng 0 đến 100.");
+//                return false;
+//            }
+//        } catch (Exception e) {
+//            authorField.requestFocus();
+//            showMessage("Author không hợp lệ!");
+//            return false;
+//        }
+//        return true;
+           String author = authorField.getText();
+        if (author == null || "".equals(author.trim())) {
             authorField.requestFocus();
-            showMessage("Author không hợp lệ!");
+            showMessage("Author không được trống.");
             return false;
         }
         return true;
+
     }
     
     private boolean validateCost() {
         try {
             Float cost = Float.parseFloat(costField.getText().trim());
-            if (cost < 0 || cost > 10) {
+            if (cost < 0) {
                 costField.requestFocus();
                 showMessage("Cost không hợp lệ, cost nên trong khoảng 0 đến 10.");
                 return false;
