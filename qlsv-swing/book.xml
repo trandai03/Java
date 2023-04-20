@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <books>
     <book>
+        <type>Novel</type>
         <id>1</id>
-	<type>Novel</type>
         <name>Mai Thanh Toan</name>
         <author>Thuy Linh</author>
         <year>2000</year>
         <cost>8.0</cost>
     </book>
     <book>
+        <type>Newspaper</type>
         <id>3</id>
-	<type>Newspaper</type>
         <name>Dai Bang</name>
         <author>Tran Duong</author>
         <year>1999</year>
         <cost>9.0</cost>
     </book>
     <book>
+        <type>Novel</type>
         <id>2</id>
-	<type>Novel</type>
         <name>Vinh The Mac</name>
         <author>Tran Dai</author>
         <year>2015</year>
         <cost>9.5</cost>
     </book>
-    
 </books>

@@ -17,7 +17,7 @@ import vn.viettuts.qlsv.utils.FileUtils;
 public class BookDao {
     private static final String BOOK_FILE_NAME = "book.xml";
     private List<Book> listBooks;
-
+    public List<Book> ls =listBooks;
     public BookDao() {
         this.listBooks = readListBooks();
         if (listBooks == null) {
@@ -132,7 +132,9 @@ public class BookDao {
             }
         });
     }
-
+    
+    
+    
     public List<Book> getListBooks() {
         return listBooks;
     }

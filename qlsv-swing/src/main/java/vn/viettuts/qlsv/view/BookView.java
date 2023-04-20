@@ -12,7 +12,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import vn.viettuts.qlsv.entity.Book;
-
+import java.util.ArrayList;
+import vn.viettuts.qlsv.dao.BookDao;
 /**
  *
  * @author User
@@ -59,8 +60,8 @@ public class BookView extends javax.swing.JFrame {
         editBookBtn = new javax.swing.JButton();
         deleteBookBtn = new javax.swing.JButton();
         clearBtn = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        buttonField = new javax.swing.JTextField();
+        typeSearch = new javax.swing.JComboBox<>();
+        searchField = new javax.swing.JTextField();
         buttonSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         bookTable = new javax.swing.JTable();
@@ -68,6 +69,9 @@ public class BookView extends javax.swing.JFrame {
         sortBookCostBtn = new javax.swing.JButton();
         Type = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        filterButton = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        typeField = new javax.swing.JTextField();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -116,10 +120,10 @@ public class BookView extends javax.swing.JFrame {
 
         clearBtn.setText("Clear");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Name", "Author" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        typeSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Name", "Author" }));
+        typeSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                typeSearchActionPerformed(evt);
             }
         });
 
@@ -162,6 +166,10 @@ public class BookView extends javax.swing.JFrame {
 
         jLabel7.setText("Search By");
 
+        filterButton.setText("Filter");
+
+        jLabel6.setText("Type");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -175,9 +183,9 @@ public class BookView extends javax.swing.JFrame {
                                 .addComponent(addBookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(editBookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                                 .addComponent(deleteBookBtn)
-                                .addGap(25, 25, 25)
+                                .addGap(18, 18, 18)
                                 .addComponent(clearBtn)
                                 .addGap(20, 20, 20))
                             .addGroup(layout.createSequentialGroup()
@@ -189,19 +197,27 @@ public class BookView extends javax.swing.JFrame {
                                     .addComponent(yearField)
                                     .addComponent(authorField)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22)
-                                .addComponent(costField))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Type, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(typeList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(typeList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(72, 72, 72)
+                                        .addComponent(filterButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(nameField)
-                                    .addComponent(idField))))
+                                    .addComponent(idField)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(costField)
+                                    .addComponent(typeField))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(100, 100, 100)
@@ -210,7 +226,7 @@ public class BookView extends javax.swing.JFrame {
                                 .addComponent(sortBookCostBtn)
                                 .addContainerGap(129, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())))
                     .addGroup(layout.createSequentialGroup()
@@ -218,9 +234,9 @@ public class BookView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(typeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(buttonField, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(37, 37, 37)
                                 .addComponent(buttonSearch)))
                         .addContainerGap())))
@@ -233,7 +249,8 @@ public class BookView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(typeList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Type))
+                            .addComponent(Type)
+                            .addComponent(filterButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -255,21 +272,31 @@ public class BookView extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(costField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(sortBookNameBtn)
+                            .addComponent(sortBookCostBtn))
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(typeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addBookBtn)
+                            .addComponent(editBookBtn)
+                            .addComponent(deleteBookBtn)
+                            .addComponent(clearBtn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editBookBtn)
-                    .addComponent(deleteBookBtn)
-                    .addComponent(addBookBtn)
-                    .addComponent(clearBtn)
-                    .addComponent(sortBookNameBtn)
-                    .addComponent(sortBookCostBtn))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(typeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonSearch))
                 .addGap(64, 64, 64))
         );
@@ -288,11 +315,14 @@ public class BookView extends javax.swing.JFrame {
 
     private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
         // TODO add your handling code here:
+       
+        
+        
     }//GEN-LAST:event_buttonSearchActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void typeSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeSearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_typeSearchActionPerformed
 
     private void typeListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeListActionPerformed
         // TODO add your handling code here:
@@ -329,6 +359,7 @@ public class BookView extends javax.swing.JFrame {
             authorField.setText(bookTable.getModel().getValueAt(row, 2).toString());
             yearField.setText(bookTable.getModel().getValueAt(row, 3).toString());
             costField.setText(bookTable.getModel().getValueAt(row, 4).toString());
+            typeField.setText(bookTable.getModel().getValueAt(row, 5).toString());
             // enable Edit and Delete buttons
             editBookBtn.setEnabled(true);
             deleteBookBtn.setEnabled(true);
@@ -343,6 +374,7 @@ public class BookView extends javax.swing.JFrame {
         authorField.setText("");
         yearField.setText("");
         costField.setText("");
+        typeField.setText("");
         // disable Edit and Delete buttons
         editBookBtn.setEnabled(false);
         deleteBookBtn.setEnabled(false);
@@ -361,6 +393,7 @@ public class BookView extends javax.swing.JFrame {
         authorField.setText("" + book.getAuthor());
         yearField.setText(""+book.getYear());
         costField.setText("" + book.getCost());
+        typeField.setText("" + book.getType());
         // enable Edit and Delete buttons
         editBookBtn.setEnabled(true);
         deleteBookBtn.setEnabled(true);
@@ -371,7 +404,7 @@ public class BookView extends javax.swing.JFrame {
     
     public Book getBookInfo() {
         // validate book
-        if (!validateName() || !validateAuthor() || !validateYear() || !validateCost()) {
+        if (!validateName() || !validateAuthor() || !validateYear() || !validateCost() || !validateType()) {
             return null;
         }
         try {
@@ -383,11 +416,23 @@ public class BookView extends javax.swing.JFrame {
             book.setAuthor(authorField.getText().trim());
             book.setYear(Integer.parseInt(yearField.getText().trim()));
             book.setCost(Float.parseFloat(costField.getText().trim()));
+            book.setType(typeField.getText().trim());
             return book;
         } catch (Exception e) {
             showMessage(e.getMessage());
         }
         return null;
+    }
+    
+    
+    private boolean validateType() {
+        String type = nameField.getText();
+        if (type == null || "".equals(type.trim())) {
+            typeField.requestFocus();
+            showMessage("Type không được trống.");
+            return false;
+        }
+        return true;
     }
     
     private boolean validateName() {
@@ -442,8 +487,74 @@ public class BookView extends javax.swing.JFrame {
         return true;
     }
     
+    
+    public void findByName(List<Book> list){
+        String ten= searchField.getText();
+        List<Book> listFind= new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            Book temp= list.get(i);
+            if(temp.getName().equalsIgnoreCase(ten)){
+                listFind.add(temp);
+            }
+        }
+        
+        if(listFind.size() > 0){
+            showMessage("OK");
+        }else{
+            showMessage("Khong tim thay");
+        }
+        showListBooks(listFind);
+    }
+    
+    public void findByAuthor(List<Book> list){
+        String author= searchField.getText();
+        List<Book> listFind= new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            Book temp= list.get(i);
+            if(temp.getAuthor().equalsIgnoreCase(author)){
+                listFind.add(temp);
+                
+            }
+        }
+        
+        if(listFind.size() > 0){
+            showMessage("OK");
+        }else{
+            showMessage("Khong tim thay");
+        }
+        showListBooks(listFind);
+    }
+    public void Search(List<Book> list){
+        String type= typeSearch.getSelectedItem().toString();
+        if(type=="Name"){
+            findByName(list);
+        }else if(type=="Author"){
+            findByAuthor(list);
+        }
+    }
+    
+    public void filter(List<Book> list){
+        String type= typeList.getSelectedItem().toString();
+        List<Book> listFind= new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            Book temp= list.get(i);
+            if(temp.getType().equalsIgnoreCase(type)){
+                listFind.add(temp);
+                
+            }
+        }
+        
+        if(listFind.size() > 0){
+            showMessage("OK");
+        }
+        showListBooks(listFind);
+    }
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
+    }
+    
+    public void addSearchBookListener(ActionListener listener) {
+        buttonSearch.addActionListener(listener);
     }
     
     public void addAddBookListener(ActionListener listener) {
@@ -473,7 +584,9 @@ public class BookView extends javax.swing.JFrame {
     public void addListBookSelectionListener(ListSelectionListener listener) {
         bookTable.getSelectionModel().addListSelectionListener(listener);
     }
-    
+    public void addFilterBookListener(ActionListener listener) {
+        filterButton.addActionListener(listener);
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -512,19 +625,19 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JButton addBookBtn;
     private javax.swing.JTextField authorField;
     private javax.swing.JTable bookTable;
-    private javax.swing.JTextField buttonField;
     private javax.swing.JButton buttonSearch;
     private javax.swing.JButton clearBtn;
     private javax.swing.JTextField costField;
     private javax.swing.JButton deleteBookBtn;
     private javax.swing.JButton editBookBtn;
+    private javax.swing.JButton filterButton;
     private javax.swing.JTextField idField;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -532,9 +645,12 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nameField;
+    private javax.swing.JTextField searchField;
     private javax.swing.JButton sortBookCostBtn;
     private javax.swing.JButton sortBookNameBtn;
+    private javax.swing.JTextField typeField;
     private javax.swing.JComboBox<String> typeList;
+    private javax.swing.JComboBox<String> typeSearch;
     private javax.swing.JTextField yearField;
     // End of variables declaration//GEN-END:variables
 }

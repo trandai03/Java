@@ -26,6 +26,8 @@ public class BookController {
         view.addSortBookCostListener(new SortBookCostListener());
         view.addSortBookNameListener(new SortBookNameListener());
         view.addListBookSelectionListener(new ListBookSelectionListener());
+        view.addSearchBookListener(new SearchBookListener());
+        view.addFilterBookListener(new FiltertBookListener());
     }
 
     public void showBookView() {
@@ -99,7 +101,21 @@ public class BookController {
             bookView.clearBookInfo();
         }
     }
-
+    
+    
+    class SearchBookListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            bookView.Search(bookDao.getListBooks());
+            
+        }
+    }
+    
+    class FiltertBookListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            bookView.filter(bookDao.getListBooks());
+            
+        }
+    }
     /**
      * Lớp SortBookCostListener 
      * chứa cài đặt cho sự kiện click button "Sort By Cost"
