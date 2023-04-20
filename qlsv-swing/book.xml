@@ -2,6 +2,7 @@
 <books>
     <book>
         <id>1</id>
+	<type>Novel</type>
         <name>Mai Thanh Toan</name>
         <author>Thuy Linh</author>
         <year>2000</year>
@@ -9,37 +10,19 @@
     </book>
     <book>
         <id>3</id>
+	<type>Newspaper</type>
         <name>Dai Bang</name>
-        <author>24</author>
+        <author>Tran Duong</author>
         <year>1999</year>
         <cost>9.0</cost>
     </book>
     <book>
         <id>2</id>
+	<type>Novel</type>
         <name>Vinh The Mac</name>
-        <author>23</author>
+        <author>Tran Dai</author>
         <year>2015</year>
         <cost>9.5</cost>
     </book>
-    <book>
-        <id>4</id>
-        <name>Đỗ Đại Học</name>
-        <author>18</author>
-        <year>2022</year>
-        <cost>9.0</cost>
-    </book>
-    <book>
-        <id>5</id>
-        <name>Dương</name>
-        <author>23</author>
-        <year>2003</year>
-        <cost>9.0</cost>
-    </book>
-    <book>
-        <id>6</id>
-        <name>Hoàng Long</name>
-        <author>Anhxtanh</author>
-        <year>2012</year>
-        <cost>100.0</cost>
-    </book>
+    
 </books>
