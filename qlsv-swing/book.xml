@@ -9,19 +9,19 @@
         <cost>8.0</cost>
     </book>
     <book>
-        <type>Newspaper</type>
-        <id>3</id>
-        <name>Dai Bang</name>
-        <author>Tran Duong</author>
-        <year>1999</year>
-        <cost>9.0</cost>
-    </book>
-    <book>
         <type>Novel</type>
         <id>2</id>
         <name>Vinh The Mac</name>
         <author>Tran Dai</author>
         <year>2015</year>
         <cost>9.5</cost>
+    </book>
+    <book>
+        <type>Newspaper</type>
+        <id>3</id>
+        <name>Dai Bang</name>
+        <author>Tran Duong</author>
+        <year>1999</year>
+        <cost>9.0</cost>
     </book>
 </books>
