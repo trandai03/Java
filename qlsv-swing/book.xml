@@ -3,25 +3,25 @@
     <book>
         <type>Novel</type>
         <id>1</id>
-        <name>Mai Thanh Toan</name>
-        <author>Thuy Linh</author>
-        <year>2000</year>
-        <cost>8.0</cost>
+        <name>The Da Vinci Code</name>
+        <author>Dan Brown</author>
+        <year>2003</year>
+        <cost>40.0</cost>
     </book>
     <book>
         <type>Novel</type>
         <id>2</id>
-        <name>Vinh The Mac</name>
-        <author>Tran Dai</author>
-        <year>2015</year>
-        <cost>9.5</cost>
+        <name>The Lord of the Rings</name>
+        <author>J.R.R.Tolkien</author>
+        <year>1954</year>
+        <cost>60.0</cost>
     </book>
     <book>
         <type>Newspaper</type>
         <id>3</id>
-        <name>Dai Bang</name>
-        <author>Tran Duong</author>
-        <year>1999</year>
-        <cost>9.0</cost>
+        <name>Nghệ thuật ẩn mình</name>
+        <author>Kevin Mitnick</author>
+        <year>2018</year>
+        <cost>289.0</cost>
     </book>
 </books>
