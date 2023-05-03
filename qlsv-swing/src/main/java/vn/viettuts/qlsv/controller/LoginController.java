@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import vn.viettuts.qlsv.dao.UserDao;
 import vn.viettuts.qlsv.entity.User;
 import vn.viettuts.qlsv.view.LoginView;
-import vn.viettuts.qlsv.view.Bview;
 import vn.viettuts.qlsv.view.BookView;
 public class LoginController {
     private UserDao userDao;
