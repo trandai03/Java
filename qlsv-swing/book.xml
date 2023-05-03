@@ -24,4 +24,12 @@
         <year>2018</year>
         <cost>289.0</cost>
     </book>
+    <book>
+        <type>Novel</type>
+        <id>4</id>
+        <name>chao buoi sang</name>
+        <author>tran duong</author>
+        <year>2022</year>
+        <cost>20000.0</cost>
+    </book>
 </books>
