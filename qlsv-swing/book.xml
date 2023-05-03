@@ -17,16 +17,8 @@
         <cost>60.0</cost>
     </book>
     <book>
-        <type>Newspaper</type>
-        <id>3</id>
-        <name>Nghệ thuật ẩn mình</name>
-        <author>Kevin Mitnick</author>
-        <year>2018</year>
-        <cost>289.0</cost>
-    </book>
-    <book>
         <type>Novel</type>
-        <id>4</id>
+        <id>3</id>
         <name>chao buoi sang</name>
         <author>tran duong</author>
         <year>2022</year>
