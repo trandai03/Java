@@ -16,11 +16,15 @@
         <author>J.R.R.Tolkien</author>
         <year>1954</year>
         <cost>60.0</cost>
+<<<<<<< HEAD
         <number>0</number>
+=======
+>>>>>>> f10574b43e481598334724f42f389393ba1e3efb
     </book>
     <book>
         <type>Novel</type>
         <id>3</id>
+<<<<<<< HEAD
         <name>Chao buoi sang</name>
         <author>Trần Dương</author>
         <year>2021</year>
@@ -80,5 +84,11 @@
         <cost>40.0</cost>
         <publisher>Nhà nước</publisher>
         <number>12</number>
+=======
+        <name>chao buoi sang</name>
+        <author>tran duong</author>
+        <year>2022</year>
+        <cost>20000.0</cost>
+>>>>>>> f10574b43e481598334724f42f389393ba1e3efb
     </book>
 </books>
