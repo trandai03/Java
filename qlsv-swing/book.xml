@@ -7,6 +7,7 @@
         <author>Dan Brown</author>
         <year>2003</year>
         <cost>40.0</cost>
+        <number>0</number>
     </book>
     <book>
         <type>Novel</type>
@@ -15,21 +16,69 @@
         <author>J.R.R.Tolkien</author>
         <year>1954</year>
         <cost>60.0</cost>
-    </book>
-    <book>
-        <type>Newspaper</type>
-        <id>3</id>
-        <name>Nghệ thuật ẩn mình</name>
-        <author>Kevin Mitnick</author>
-        <year>2018</year>
-        <cost>289.0</cost>
+        <number>0</number>
     </book>
     <book>
         <type>Novel</type>
+        <id>3</id>
+        <name>Chao buoi sang</name>
+        <author>Trần Dương</author>
+        <year>2021</year>
+        <cost>20.0</cost>
+        <number>0</number>
+    </book>
+    <book>
+        <type>Newspaper</type>
         <id>4</id>
-        <name>chao buoi sang</name>
-        <author>tran duong</author>
-        <year>2022</year>
-        <cost>20000.0</cost>
+        <name>Tuổi trẻ</name>
+        <year>2015</year>
+        <cost>28.0</cost>
+        <publisher>Kim Đồng</publisher>
+        <number>5</number>
+    </book>
+    <book>
+        <type>Newspaper</type>
+        <id>5</id>
+        <name>Văn hoá</name>
+        <year>2020</year>
+        <cost>290.0</cost>
+        <publisher>Bộ giáo dục</publisher>
+        <number>15</number>
+    </book>
+    <book>
+        <type>Novel</type>
+        <id>6</id>
+        <name>Hello</name>
+        <author>Đài</author>
+        <year>2023</year>
+        <cost>50.0</cost>
+        <number>0</number>
+    </book>
+    <book>
+        <type>Newspaper</type>
+        <id>7</id>
+        <name>Giáo dục</name>
+        <year>2021</year>
+        <cost>12.0</cost>
+        <publisher>Trọng Hiếu</publisher>
+        <number>3</number>
+    </book>
+    <book>
+        <type>Novel</type>
+        <id>8</id>
+        <name>Harry Potter</name>
+        <author>J. K. Rowling</author>
+        <year>2000</year>
+        <cost>35.0</cost>
+        <number>0</number>
+    </book>
+    <book>
+        <type>Newspaper</type>
+        <id>9</id>
+        <name>Kinh tế</name>
+        <year>2019</year>
+        <cost>40.0</cost>
+        <publisher>Nhà nước</publisher>
+        <number>12</number>
     </book>
 </books>

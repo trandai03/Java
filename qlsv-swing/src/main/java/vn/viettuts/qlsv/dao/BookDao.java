@@ -17,11 +17,22 @@ import vn.viettuts.qlsv.utils.FileUtils;
 public class BookDao {
     private static final String BOOK_FILE_NAME = "book.xml";
     private List<Book> listBooks;
+    private List<Book> listNewspapers;
     public List<Book> ls =listBooks;
+    private List<Book> listNovels;
     public BookDao() {
         this.listBooks = readListBooks();
         if (listBooks == null) {
             listBooks = new ArrayList<Book>();
+        }
+        
+        //this.listNewspapers = readListBooks();
+        if (listNewspapers == null) {
+            listNewspapers = new ArrayList<Book>();
+        }
+        
+        if (listNovels == null) {
+            listNovels = new ArrayList<Book>();
         }
     }
 
@@ -56,6 +67,26 @@ public class BookDao {
      * 
      * @param book
      */
+    
+    public List<Book> getListNovel(){
+        List<Book>temp =new ArrayList<Book>();
+        for(Book a : listBooks){
+            if(a.getType().equals("Novel")){
+                temp.add(a);
+            }
+        }
+        return temp;
+    }
+    public List<Book> getListNewspapers() {
+        List<Book>temp =new ArrayList<Book>();
+        for(Book a : listBooks){
+            if(a.getType().equals("Newspaper")){
+                temp.add(a);
+            }
+        }
+        
+        return temp;
+    }
     public void add(Book book) {
         int id = 1;
         if (listBooks != null && listBooks.size() > 0) {
@@ -73,6 +104,7 @@ public class BookDao {
      */
     public void edit(Book book) {
         int size = listBooks.size();
+        if(book.getType().equalsIgnoreCase("Novel")){
         for (int i = 0; i < size; i++) {
             if (listBooks.get(i).getId() == book.getId()) {
                 listBooks.get(i).setName(book.getName());
@@ -81,6 +113,20 @@ public class BookDao {
                 listBooks.get(i).setCost(book.getCost());
                 writeListBooks(listBooks);
                 break;
+            }
+        }
+        }else{
+            for (int i = 0; i < size; i++) {
+                if (listBooks.get(i).getId() == book.getId()) {
+                    listBooks.get(i).setName(book.getName());
+                    listBooks.get(i).setPublisher(book.getPublisher());
+                    listBooks.get(i).setYear(book.getYear());
+                    listBooks.get(i).setCost(book.getCost());
+                    listBooks.get(i).setNumber(book.getNumber());
+                    writeListBooks(listBooks);
+                    break;
+        
+                }
             }
         }
     }
@@ -133,6 +179,17 @@ public class BookDao {
         });
     }
     
+    public void sortBookByID() {
+        Collections.sort(listBooks, new Comparator<Book>() {
+            public int compare(Book book1, Book book2) {
+                if (book1.getId() > book2.getId()) {
+                    return 1;
+                }
+                return -1;
+            }
+        });
+    }
+    
     
     
     public List<Book> getListBooks() {
@@ -141,5 +198,11 @@ public class BookDao {
 
     public void setListBooks(List<Book> listBooks) {
         this.listBooks = listBooks;
+    }
+    
+    
+
+    public void setListNewspapers(List<Book> listNewspapers) {
+        this.listNewspapers = listNewspapers;
     }
 }

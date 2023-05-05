@@ -15,20 +15,31 @@ public class Book implements Serializable {
     private String name;
     private String author;
     private int year;
-    /* điểm trung bình của sinh viên */
     private float cost;
+    private String publisher;
+    private int number;
 
-    public Book() {
-    }
+    public Book() {}
 
-    public Book(int id, String name, String author, int year, float cost,String type) {
+    public Book(int id, String name, int year, float cost,String type,String author) {
         super();
         this.id = id;
         this.name = name;
-        this.author = author;
         this.year = year;
         this.cost = cost;
-        this.type=type;
+        this.type = type;
+        this.author=author;
+    }
+    
+    public Book(int id, String name, int year, float cost,String type,String publisher,int number) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.year = year;
+        this.cost = cost;
+        this.type = type;
+        this.publisher = publisher;
+        this.number = number;
     }
     
     public String getType(){
@@ -76,4 +87,20 @@ public class Book implements Serializable {
     public void setCost(float cost) {
         this.cost = cost;
     }
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+    
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+     
 }

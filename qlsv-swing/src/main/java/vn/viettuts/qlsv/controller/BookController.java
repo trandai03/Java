@@ -24,6 +24,7 @@ public class BookController {
         view.addDeleteBookListener(new DeleteBookListener());
         view.addClearListener(new ClearBookListener());
         view.addSortBookCostListener(new SortBookCostListener());
+        view.addSortBookIDListener(new SortBookIDListener());
         view.addSortBookNameListener(new SortBookNameListener());
         view.addListBookSelectionListener(new ListBookSelectionListener());
         view.addSearchBookListener(new SearchBookListener());
@@ -31,9 +32,9 @@ public class BookController {
     }
 
     public void showBookView() {
-        List<Book> bookList = bookDao.getListBooks();
+
         bookView.setVisible(true);
-        bookView.showListBooks(bookList);
+        bookView.showListBooks(bookDao.getListNovel(),bookDao.getListNewspapers());
     }
 
     /**
@@ -48,7 +49,7 @@ public class BookController {
             if (book != null) {
                 bookDao.add(book);
                 bookView.showBook(book);
-                bookView.showListBooks(bookDao.getListBooks());
+                bookView.showListBooks(bookDao.getListNovel(),bookDao.getListNewspapers());
                 bookView.showMessage("Thêm thành công!");
             }
         }
@@ -66,7 +67,7 @@ public class BookController {
             if (book != null) {
                 bookDao.edit(book);
                 bookView.showBook(book);
-                bookView.showListBooks(bookDao.getListBooks());
+                bookView.showListBooks(bookDao.getListNovel(),bookDao.getListNewspapers());
                 bookView.showMessage("Cập nhật thành công!");
             }
         }
@@ -84,7 +85,7 @@ public class BookController {
             if (book != null) {
                 bookDao.delete(book);
                 bookView.clearBookInfo();
-                bookView.showListBooks(bookDao.getListBooks());
+                bookView.showListBooks(bookDao.getListNovel(),bookDao.getListNewspapers());
                 bookView.showMessage("Xóa thành công!");
             }
         }
@@ -109,7 +110,7 @@ public class BookController {
             
         }
     }
-    
+
     class FiltertBookListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             bookView.filter(bookDao.getListBooks());
@@ -125,7 +126,14 @@ public class BookController {
     class SortBookCostListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             bookDao.sortBookByCost();
-            bookView.showListBooks(bookDao.getListBooks());
+            bookView.showListBooks(bookDao.getListNovel(),bookDao.getListNewspapers());
+        }
+    }
+    
+    class SortBookIDListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            bookDao.sortBookByID();
+            bookView.showListBooks(bookDao.getListNovel(),bookDao.getListNewspapers());
         }
     }
 
@@ -138,7 +146,7 @@ public class BookController {
     class SortBookNameListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             bookDao.sortBookByName();
-            bookView.showListBooks(bookDao.getListBooks());
+            bookView.showListBooks(bookDao.getListNovel(),bookDao.getListNewspapers());
         }
     }
 
@@ -150,7 +158,12 @@ public class BookController {
      */
     class ListBookSelectionListener implements ListSelectionListener {
         public void valueChanged(ListSelectionEvent e) {
-            bookView.fillBookFromSelectedRow();
+         
+//            bookView.fillBookFromSelectedRow();
+            
         }
+        
     }
+    
+    
 }

@@ -14,6 +14,9 @@ import javax.swing.table.DefaultTableModel;
 import vn.viettuts.qlsv.entity.Book;
 import java.util.ArrayList;
 import vn.viettuts.qlsv.dao.BookDao;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 /**
  *
  * @author User
@@ -26,6 +29,8 @@ public class BookView extends javax.swing.JFrame {
     
     private String [] columnNames = new String [] {
             "ID", "Name", "Author", "Year", "Cost", "Type"};
+    private String [] columnNames1 = new String [] {
+            "ID", "Name", "Publisher", "Year", "Cost", "Type","Number"};
     // định nghĩa dữ liệu mặc định của bẳng book là rỗng
     private Object data = new Object [][] {};
     public BookView() {
@@ -48,7 +53,6 @@ public class BookView extends javax.swing.JFrame {
         jFrame1 = new javax.swing.JFrame();
         jFrame2 = new javax.swing.JFrame();
         jFrame3 = new javax.swing.JFrame();
-        typeList = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         idField = new javax.swing.JTextField();
@@ -69,23 +73,22 @@ public class BookView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         filterButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        bookTable1 = new javax.swing.JTable();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        newsTable = new javax.swing.JTable();
+        JPane = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        author = new javax.swing.JLabel();
         authorField = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        typeField = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         name = new javax.swing.JLabel();
         nameField1 = new javax.swing.JTextField();
-        nxbField = new javax.swing.JTextField();
-        typeField1 = new javax.swing.JTextField();
-        nxb = new javax.swing.JLabel();
-        type = new javax.swing.JLabel();
+        publisherField = new javax.swing.JTextField();
+        publisher = new javax.swing.JLabel();
+        number = new javax.swing.JLabel();
+        numberField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        sortBookIDBtn = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -131,13 +134,6 @@ public class BookView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Thư viện");
 
-        typeList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Novel", "Newspaper" }));
-        typeList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                typeListActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Year");
 
         jLabel5.setText("Cost");
@@ -161,7 +157,7 @@ public class BookView extends javax.swing.JFrame {
 
         clearBtn.setText("Clear");
 
-        typeSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Name", "Author" }));
+        typeSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Novel", "Newspaper" }));
         typeSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 typeSearchActionPerformed(evt);
@@ -212,34 +208,42 @@ public class BookView extends javax.swing.JFrame {
 
         jLabel7.setText("Search By");
 
-        filterButton.setText("Filter");
+        filterButton.setText("Reset");
+        filterButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                filterButtonMouseClicked(evt);
+            }
+        });
 
-        bookTable1.setModel(new javax.swing.table.DefaultTableModel(
+        newsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "NXB", "Year", "Cost", "Type"
+                "ID", "Name", "NXB", "Year", "Cost", "Type", "Number"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(bookTable1);
+        newsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                newsTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(newsTable);
 
         jLabel2.setText("Name");
 
-        jLabel3.setText("Author");
-
-        jLabel6.setText("Type");
+        author.setText("Author");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -247,19 +251,13 @@ public class BookView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(author, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(typeField))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(authorField)
-                            .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))))
+                    .addComponent(authorField)
+                    .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -271,16 +269,12 @@ public class BookView extends javax.swing.JFrame {
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(author)
                     .addComponent(authorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(typeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(0, 23, Short.MAX_VALUE))
+                .addGap(0, 63, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Novel", jPanel3);
+        JPane.addTab("Novel", jPanel3);
 
         name.setText("Name");
 
@@ -290,9 +284,9 @@ public class BookView extends javax.swing.JFrame {
             }
         });
 
-        nxb.setText("NXB");
+        publisher.setText("Publisher");
 
-        type.setText("Type");
+        number.setText("Number");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -301,15 +295,15 @@ public class BookView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nxb, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(number)
+                    .addComponent(publisher, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(typeField1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nxbField, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nameField1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addComponent(nameField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(publisherField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numberField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,18 +314,20 @@ public class BookView extends javax.swing.JFrame {
                     .addComponent(nameField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nxbField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nxb))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(publisherField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(publisher))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(typeField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(type))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(number, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Newspaper", jPanel1);
+        JPane.addTab("Newspaper", jPanel1);
 
         jLabel1.setText("ID");
+
+        sortBookIDBtn.setText("Sort By ID");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -353,7 +349,7 @@ public class BookView extends javax.swing.JFrame {
                                 .addComponent(buttonSearch)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(addBookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
@@ -365,10 +361,8 @@ public class BookView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Type, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(65, 65, 65)
-                                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43)
-                                .addComponent(typeList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
+                                .addComponent(JPane, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(filterButton))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,11 +374,12 @@ public class BookView extends javax.swing.JFrame {
                                     .addComponent(costField, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
                                     .addComponent(idField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
                                     .addComponent(yearField, javax.swing.GroupLayout.Alignment.LEADING))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGap(136, 136, 136)
+                                    .addComponent(sortBookIDBtn)
+                                    .addGap(50, 50, 50)
                                     .addComponent(sortBookNameBtn)
                                     .addGap(72, 72, 72)
                                     .addComponent(sortBookCostBtn))
@@ -395,25 +390,21 @@ public class BookView extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(typeList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Type)
-                                    .addComponent(filterButton))
-                                .addGap(117, 117, 117))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
+                                .addComponent(Type)
+                                .addGap(121, 121, 121))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(filterButton)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(30, 30, 30)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JPane, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -432,7 +423,8 @@ public class BookView extends javax.swing.JFrame {
                         .addGap(0, 3, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(sortBookNameBtn)
-                            .addComponent(sortBookCostBtn))
+                            .addComponent(sortBookCostBtn)
+                            .addComponent(sortBookIDBtn))
                         .addGap(27, 27, 27))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -474,22 +466,55 @@ public class BookView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_typeSearchActionPerformed
 
-    private void typeListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeListActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_typeListActionPerformed
-
     private void bookTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookTableMouseClicked
-        // TODO add your handling code here:
+        selectedTable = false;
+        Book book;
+        book = getSelectedBookFromBookTable();
+    
+    
+    
+    // Cập nhật dữ liệu lên các trường nhập liệu
+        JPane.setSelectedIndex(0);
+        showBook(book);
+
+            editBookBtn.setEnabled(true);
+            deleteBookBtn.setEnabled(true);
+            // disable Add button
+            addBookBtn.setEnabled(false);
+    
     }//GEN-LAST:event_bookTableMouseClicked
 
     private void nameField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nameField1ActionPerformed
+
+    private void newsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newsTableMouseClicked
+        selectedTable = true;
+        Book book;
+        book = getSelectedBookFromNewTable();
     
     
     
-    public void showListBooks(List<Book> list) {
+    // Cập nhật dữ liệu lên các trường nhập liệu
+        JPane.setSelectedIndex(1);
+        showNews(book);
+
+            editBookBtn.setEnabled(true);
+            deleteBookBtn.setEnabled(true);
+            // disable Add button
+            addBookBtn.setEnabled(false);
+    }//GEN-LAST:event_newsTableMouseClicked
+
+    private void filterButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filterButtonMouseClicked
+        
+    }//GEN-LAST:event_filterButtonMouseClicked
+    
+    
+    
+    public void showListBooks(List<Book> list,List<Book> list1) {
         int size = list.size();
+        
+        int size1 = list1.size();
         // với bảng bookTable có 5 cột, 
         // khởi tạo mảng 2 chiều books, trong đó:
         // số hàng: là kích thước của list book 
@@ -504,46 +529,110 @@ public class BookView extends javax.swing.JFrame {
             books[i][5] = list.get(i).getType();
 
         }
+        Object [][] news = new Object[size1][7];
+        for (int i = 0; i < size1; i++) {
+            news[i][0] = list1.get(i).getId();
+            news[i][1] = list1.get(i).getName();
+            news[i][2] = list1.get(i).getPublisher();
+            news[i][3] = list1.get(i).getYear();
+            news[i][4] = list1.get(i).getCost();
+            news[i][5] = list1.get(i).getType();
+            news[i][6] = list1.get(i).getNumber();
+        }
+        bookTable.setModel(new DefaultTableModel(books, columnNames));
+        newsTable.setModel(new DefaultTableModel(news, columnNames1));
+        
+        
+    
+    }
+    
+    public void showListNovels(List<Book> list){
+        int size = list.size();
+        Object [][] books = new Object[size][6];
+        for (int i = 0; i < size; i++) {
+            books[i][0] = list.get(i).getId();
+            books[i][1] = list.get(i).getName();
+            books[i][2] = list.get(i).getAuthor();
+            books[i][3] = list.get(i).getYear();
+            books[i][4] = list.get(i).getCost();
+            books[i][5] = list.get(i).getType();
+
+        }
         bookTable.setModel(new DefaultTableModel(books, columnNames));
     }
     
-    
-    public void fillBookFromSelectedRow() {
-        // lấy chỉ số của hàng được chọn 
-        int row = bookTable.getSelectedRow();
-        if (row >= 0) {
-            if(bookTable.getModel().getValueAt(row, 5).toString().equalsIgnoreCase("Novel")){
-                jTabbedPane1.setSelectedIndex(0);
-                nameField.setText(bookTable.getModel().getValueAt(row, 1).toString());
-                typeField.setText(bookTable.getModel().getValueAt(row, 5).toString());
-                authorField.setText(bookTable.getModel().getValueAt(row, 2).toString());
-                
-
-            }else{
-                jTabbedPane1.setSelectedIndex(1);
-                nameField1.setText(bookTable.getModel().getValueAt(row, 1).toString());
-                typeField1.setText(bookTable.getModel().getValueAt(row, 5).toString());
-                nxbField.setText(bookTable.getModel().getValueAt(row, 2).toString());
-            }
-            idField.setText(bookTable.getModel().getValueAt(row, 0).toString());
-            yearField.setText(bookTable.getModel().getValueAt(row, 3).toString());
-            costField.setText(bookTable.getModel().getValueAt(row, 4).toString());
-            // enable Edit and Delete buttons
-            editBookBtn.setEnabled(true);
-            deleteBookBtn.setEnabled(true);
-            // disable Add button
-            addBookBtn.setEnabled(false);
-            
+    public void showListNewspaper(List<Book> list1){
+        int size1 = list1.size();
+        Object [][] news = new Object[size1][7];
+        for (int i = 0; i < size1; i++) {
+            news[i][0] = list1.get(i).getId();
+            news[i][1] = list1.get(i).getName();
+            news[i][2] = list1.get(i).getPublisher();
+            news[i][3] = list1.get(i).getYear();
+            news[i][4] = list1.get(i).getCost();
+            news[i][5] = list1.get(i).getType();
+            news[i][6] = list1.get(i).getNumber();
         }
+        newsTable.setModel(new DefaultTableModel(news, columnNames1));
     }
     
+    
+  
+    public Book getSelectedBookFromBookTable() {
+        int row = bookTable.getSelectedRow();
+        if (row < 0) {
+        return null;
+        }
+       
+               TableModel model = bookTable.getModel();
+        int id = (int) model.getValueAt(row, 0);
+     String name = (String) model.getValueAt(row, 1);
+    String author = (String) model.getValueAt(row, 2);
+    int year = (int) model.getValueAt(row, 3);
+    float cost = (float) model.getValueAt(row, 4);
+    String type = (String) model.getValueAt(row, 5);
+        return new Book(id, name, year, cost, type, author);
+}
+    
+    public Book getSelectedBookFromNewTable() {
+        int row = newsTable.getSelectedRow();
+        if (row < 0) {
+        return null;
+        }
+       
+               TableModel model = newsTable.getModel();
+        int id = (int) model.getValueAt(row, 0);
+     String name = (String) model.getValueAt(row, 1);
+    String publisher = (String) model.getValueAt(row, 2);
+    int year = (int) model.getValueAt(row, 3);
+    float cost = (float) model.getValueAt(row, 4);
+    String type = (String) model.getValueAt(row, 5);
+    int number = (int) model.getValueAt(row, 6);
+        return new Book(id, name, year, cost, type, publisher, number);
+}
+    
+   
+private boolean selectedTable ;
+
+
+
+public void showNews(Book book){
+    nameField1.setText("" + book.getName());
+            publisherField.setText("" + book.getPublisher());
+            idField.setText("" + book.getId());
+            yearField.setText("" + book.getYear());
+            costField.setText("" + book.getCost());
+            numberField.setText("" + book.getNumber());
+}
     public void clearBookInfo() {
         idField.setText("");
         nameField.setText("");
         authorField.setText("");
         yearField.setText("");
         costField.setText("");
-        typeField.setText("");
+        publisherField.setText("");
+        nameField1.setText("");
+        numberField.setText("");
         // disable Edit and Delete buttons
         editBookBtn.setEnabled(false);
         deleteBookBtn.setEnabled(false);
@@ -562,7 +651,7 @@ public class BookView extends javax.swing.JFrame {
         authorField.setText("" + book.getAuthor());
         yearField.setText(""+book.getYear());
         costField.setText("" + book.getCost());
-        typeField.setText("" + book.getType());
+        
         // enable Edit and Delete buttons
         editBookBtn.setEnabled(true);
         deleteBookBtn.setEnabled(true);
@@ -573,41 +662,78 @@ public class BookView extends javax.swing.JFrame {
     
     public Book getBookInfo() {
         // validate book
-        if (!validateName() || !validateAuthor() || !validateYear() || !validateCost() || !validateType()) {
-            return null;
-        }
-        try {
-            Book book = new Book();
-            if (idField.getText() != null && !"".equals(idField.getText())) {
-                book.setId(Integer.parseInt(idField.getText()));
+        int selectedTabIndex = JPane.getSelectedIndex();
+        if(selectedTabIndex==0){
+            if (!validateName() || !validateAuthor() || !validateYear() || !validateCost()) {
+                return null;
             }
-            book.setName(nameField.getText().trim());
-            book.setAuthor(authorField.getText().trim());
-            book.setYear(Integer.parseInt(yearField.getText().trim()));
-            book.setCost(Float.parseFloat(costField.getText().trim()));
-            book.setType(typeField.getText().trim());
-            return book;
-        } catch (Exception e) {
-            showMessage(e.getMessage());
-        }
+            try {
+                Book book = new Book();
+                if (idField.getText() != null && !"".equals(idField.getText())) {
+                    book.setId(Integer.parseInt(idField.getText()));
+                }
+                book.setName(nameField.getText().trim());
+                book.setAuthor(authorField.getText().trim());
+                book.setYear(Integer.parseInt(yearField.getText().trim()));
+                book.setCost(Float.parseFloat(costField.getText().trim()));
+                book.setType("Novel");
+
+                return book;
+            } catch (Exception e) {
+                showMessage(e.getMessage());
+            }
+                
+            }else{
+                if (!validateName1() || !validatePublisher() || !validateYear() || !validateCost() || !validateNumber() ) {
+                return null;
+            }
+            try {
+                Book book = new Book();
+                if (idField.getText() != null && !"".equals(idField.getText())) {
+                    book.setId(Integer.parseInt(idField.getText()));
+                }
+                book.setName(nameField1.getText().trim());
+                book.setPublisher(publisherField.getText().trim());
+                book.setYear(Integer.parseInt(yearField.getText().trim()));
+                book.setCost(Float.parseFloat(costField.getText().trim()));
+                book.setNumber(Integer.parseInt(numberField.getText().trim()));
+                 book.setType("Newspaper");
+                return book;
+            } catch (Exception e) {
+                showMessage(e.getMessage());
+            }
+               
+            }
         return null;
     }
+
     
-    
-    private boolean validateType() {
-        String type = nameField.getText();
-        if (type == null || "".equals(type.trim())) {
-            typeField.requestFocus();
-            showMessage("Type không được trống.");
-            return false;
-        }
-        return true;
-    }
+   
     
     private boolean validateName() {
         String name = nameField.getText();
         if (name == null || "".equals(name.trim())) {
             nameField.requestFocus();
+            showMessage("Name không được trống.");
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean validateName1() {
+        String name = nameField1.getText();
+        if (name == null || "".equals(name.trim())) {
+            nameField1.requestFocus();
+            showMessage("Name không được trống.");
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean validatePublisher() {
+        String publisher = publisherField.getText();
+        if (publisher == null || "".equals(publisher.trim())) {
+            publisherField.requestFocus();
             showMessage("Name không được trống.");
             return false;
         }
@@ -627,7 +753,24 @@ public class BookView extends javax.swing.JFrame {
             showMessage("Year không hợp lệ!");
             return false;
         }
-        return true;    }
+        return true;   
+    }
+    
+    private boolean validateNumber() {
+        try {
+            int number = Integer.parseInt(numberField.getText().trim());
+            if (number < 0) {
+                numberField.requestFocus();
+                showMessage("Number không hợp lệ, number nên lớn hơn 0");
+                return false;
+            }
+        } catch (Exception e) {
+            numberField.requestFocus();
+            showMessage("Number không hợp lệ!");
+            return false;
+        }
+        return true;   
+    }
     
     private boolean validateAuthor() {
            String author = authorField.getText();
@@ -657,13 +800,17 @@ public class BookView extends javax.swing.JFrame {
     }
     
     
-    public void findByName(List<Book> list){
+    public void findByNovel(List<Book> list){
         String ten= searchField.getText();
         List<Book> listFind= new ArrayList<>();
         for(int i=0;i<list.size();i++){
             Book temp= list.get(i);
-            if(temp.getName().equalsIgnoreCase(ten)){
-                listFind.add(temp);
+            if(temp.getType().equalsIgnoreCase("Novel")){
+                
+                if(temp.getName().toLowerCase().contains(ten.toLowerCase()) || temp.getAuthor().toLowerCase().contains(ten.toLowerCase())){
+                    listFind.add(temp);
+                    
+                }
             }
         }
         
@@ -672,17 +819,18 @@ public class BookView extends javax.swing.JFrame {
         }else{
             showMessage("Khong tim thay");
         }
-        showListBooks(listFind);
+        showListNovels(listFind);
     }
     
-    public void findByAuthor(List<Book> list){
-        String author= searchField.getText();
+    public void findByNewspaper(List<Book> list){
+        String ten= searchField.getText();
         List<Book> listFind= new ArrayList<>();
         for(int i=0;i<list.size();i++){
             Book temp= list.get(i);
-            if(temp.getAuthor().equalsIgnoreCase(author)){
-                listFind.add(temp);
-                
+            if(temp.getType().equalsIgnoreCase("Newspaper")){
+                if(temp.getName().toLowerCase().contains(ten.toLowerCase()) || temp.getPublisher().toLowerCase().contains(ten.toLowerCase())){
+                    listFind.add(temp);
+                }
             }
         }
         
@@ -691,38 +839,72 @@ public class BookView extends javax.swing.JFrame {
         }else{
             showMessage("Khong tim thay");
         }
-        showListBooks(listFind);
+        showListNewspaper(listFind);
     }
+    
+    public void findByAll(List<Book> list){
+        String ten= searchField.getText();
+        List<Book> listFind= new ArrayList<>();
+        List<Book> listFind1= new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            Book temp= list.get(i);
+            if(temp.getType().equalsIgnoreCase("Novel")){
+                if(temp.getName().toLowerCase().contains(ten.toLowerCase()) || temp.getAuthor().toLowerCase().contains(ten.toLowerCase())){
+                    listFind.add(temp);
+                }
+            }else
+            if(temp.getType().equalsIgnoreCase("Newspaper")){
+                if(temp.getName().toLowerCase().contains(ten.toLowerCase()) || temp.getPublisher().toLowerCase().contains(ten.toLowerCase())){
+                    listFind1.add(temp);
+                }
+            }
+        }
+        
+        if(listFind.size() > 0 || listFind1.size() > 0){
+            showMessage("OK");
+        }else{
+            showMessage("Khong tim thay");
+        }
+        showListBooks(listFind,listFind1);
+    }
+    
     public void Search(List<Book> list){
         String type= typeSearch.getSelectedItem().toString();
-        if(type=="Name"){
-            findByName(list);
-        }else if(type=="Author"){
-            findByAuthor(list);
+        if(type == "Novel"){
+            findByNovel(list);
+        }else if(type == "Newspaper"){
+            findByNewspaper(list);
+    }else{
+            findByAll(list);
         }
+
     }
-    
+
     public void filter(List<Book> list){
-        String type= typeList.getSelectedItem().toString();
+
+
         List<Book> listFind= new ArrayList<>();
-        if(type != "All"){
+        List<Book> listFind1= new ArrayList<>();
         for(int i=0;i<list.size();i++){
             Book temp= list.get(i);
-            if(temp.getType().equalsIgnoreCase(type)){
-                listFind.add(temp);
+            if(temp.getType().equalsIgnoreCase("Novel")){
+                
+                    listFind.add(temp);
+                
+            }else
+            if(temp.getType().equalsIgnoreCase("Newspaper")){
+                
+                    listFind1.add(temp);
                 
             }
         }
-        
-        if(listFind.size() > 0){
-            showMessage("OK");
-        }
-        showListBooks(listFind);
-        }
-        
-        else{
-            showListBooks(list);
-        }
+        showListBooks(listFind,listFind1);
+
+
+
+
+
+
     }
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
@@ -752,12 +934,17 @@ public class BookView extends javax.swing.JFrame {
         sortBookCostBtn.addActionListener(listener);
     }
     
+    public void addSortBookIDListener(ActionListener listener) {
+        sortBookIDBtn.addActionListener(listener);
+    }
+    
     public void addSortBookNameListener(ActionListener listener) {
         sortBookNameBtn.addActionListener(listener);
     }
     
     public void addListBookSelectionListener(ListSelectionListener listener) {
         bookTable.getSelectionModel().addListSelectionListener(listener);
+        newsTable.getSelectionModel().addListSelectionListener(listener);
     }
     public void addFilterBookListener(ActionListener listener) {
         filterButton.addActionListener(listener);
@@ -796,11 +983,12 @@ public class BookView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane JPane;
     private javax.swing.JLabel Type;
     private javax.swing.JButton addBookBtn;
+    private javax.swing.JLabel author;
     private javax.swing.JTextField authorField;
     private javax.swing.JTable bookTable;
-    private javax.swing.JTable bookTable1;
     private javax.swing.JButton buttonSearch;
     private javax.swing.JButton clearBtn;
     private javax.swing.JTextField costField;
@@ -813,10 +1001,8 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JFrame jFrame3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -826,19 +1012,18 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel name;
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField nameField1;
-    private javax.swing.JLabel nxb;
-    private javax.swing.JTextField nxbField;
+    private javax.swing.JTable newsTable;
+    private javax.swing.JLabel number;
+    private javax.swing.JTextField numberField;
+    private javax.swing.JLabel publisher;
+    private javax.swing.JTextField publisherField;
     private javax.swing.JTextField searchField;
     private javax.swing.JButton sortBookCostBtn;
+    private javax.swing.JButton sortBookIDBtn;
     private javax.swing.JButton sortBookNameBtn;
-    private javax.swing.JLabel type;
-    private javax.swing.JTextField typeField;
-    private javax.swing.JTextField typeField1;
-    private javax.swing.JComboBox<String> typeList;
     private javax.swing.JComboBox<String> typeSearch;
     private javax.swing.JTextField yearField;
     // End of variables declaration//GEN-END:variables
